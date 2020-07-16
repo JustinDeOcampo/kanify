@@ -1,10 +1,12 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    const re = /[\u4e00-\u9faf]+/igm
-    const matches = document.documentElement.innerHTML.match(re)
-  
-    sendResponse({count: matches.length})
 
-
-
+    const re = new RegExp('[\u4e00-\u9faf]+', 'igm') // regular expression
+    const matches = document.documentElement.innerHTML.match(re) // array of all kanji on page
+    var checker = 0
+    for(var i = 0; i < matches.length; i++){
+        console.log(matches[i]) // logging all the kanji
+        checker = checker + 1 // This is just to show that I can pass more arguments to popup.js
+    }
+    sendResponse({count: matches.length, check: checker}) // sends to popup.js
 
 })
