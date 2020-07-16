@@ -2,11 +2,42 @@
 <html>
   <head>
     <title>Kanify</title>
-    <!--<script src="popup.js"></script>-->
+    <style>
+      body {
+        font-size: 14px;
+        min-height: 180px;
+        width: 384px;
+      }
+      input[type="text"] {
+        width: 250px;
+        border-radius: 4px;
+        border-width: 1px;
+      }
+      .Input-Container {
+        flex: 1;
+        margin-bottom: 2.5%;
+      }
+    </style>
   </head>
+
   <body>
-    <h1>Hello World, this is kanify</h1>
-    <button>Kanify Me</button>
-    <script src ='popup.js' charset="utf-8"></script>
+    <div id="root">
+      <h1>Kanify (v1.0.0)</h1>
+      <div class="Input-Container">
+        <form>
+          <label for="API-Input">Wani Kani v2 API Key</label><br />
+          <input
+            id="API-Input"
+            type="text"
+            placeholder="Please paste Wani Kani v2 API Key here"
+          /><br />
+          <button id = "API-Submit" type="button">Submit</button>
+        </form></form>
+      </div>
+      <div>
+        <button>Kanify Me</button>
+      </div>
+      <script src="popup.js" charset="utf-8"></script>
+    </div>
   </body>
 </html>
