@@ -29,9 +29,12 @@ document.addEventListener(
 
       var apiEndpointPath = "subjects";
 
+      /*Wani Kani's API formatted header, which holds the API token  */
       var requestHeaders = new Headers({
         Authorization: "Bearer " + apiToken,
       });
+
+      /*Creating Request object which is formatted to Wani Kani's liking */
       var apiEndpoint = new Request(
         "https://api.wanikani.com/v2/" + apiEndpointPath,
         {
@@ -39,10 +42,20 @@ document.addEventListener(
           headers: requestHeaders,
         }
       );
-
+      /*fetching the data at the endpoint URL */
       fetch(apiEndpoint)
-        .then((response) => response.json())
-        .then((responseBody) => console.log(responseBody));
+        .then((response) => response.json()) //turning data into JSON
+        .then((responseBody) => {
+          console.log(responseBody.data[90].data.characters); //returns the kanji for a given index
+          //Iterate through Kanjis UP UNTIL current user level
+
+          //Save them into chrome.storage.sync (caching)
+
+          //Iterate through regex set of kanjis, if kanji from wani-kani API is in regex set,
+          // then perform the regex replacement
+
+          //TODO:
+        });
     }
   },
   false
