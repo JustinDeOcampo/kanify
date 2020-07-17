@@ -27,34 +27,54 @@ document.addEventListener(
     function onSubmit() {
       var apiToken = document.getElementById("API-Input").value;
 
-      var apiEndpointPath = "subjects";
+      var apiSubjectEndPointPath = "subjects";
+      var apiUserEndPointPath = "user";
 
       /*Wani Kani's API formatted header, which holds the API token  */
       var requestHeaders = new Headers({
         Authorization: "Bearer " + apiToken,
       });
 
-      /*Creating Request object which is formatted to Wani Kani's liking */
-      var apiEndpoint = new Request(
-        "https://api.wanikani.com/v2/" + apiEndpointPath,
+      /*Creating Vocabulary Request object */
+      var apiSubjectEndpoint = new Request(
+        "https://api.wanikani.com/v2/" + apiSubjectEndPointPath,
         {
           method: "GET",
           headers: requestHeaders,
         }
       );
-      /*fetching the data at the endpoint URL */
-      fetch(apiEndpoint)
-        .then((response) => response.json()) //turning data into JSON
+
+      /*Creating user Request object*/
+      var apiUserEndpoint = new Request(
+        "https://api.wanikani.com/v2/" + apiUserEndPointPath,
+        {
+          method: "GET",
+          headers: requestHeaders,
+        }
+      );
+
+      //Making calls to subject/user endpoints
+      Promise.all([fetch(apiSubjectEndpoint), fetch(apiUserEndpoint)])
+        .then(async ([subject, user]) => {
+          //destructuring promises
+          const subject_data = await subject.json(); //jsonify each endpoint
+          const user_data = await user.json();
+          return [subject_data, user_data]; //return an array of jsons
+        })
         .then((responseBody) => {
-          console.log(responseBody.data[90].data.characters); //returns the kanji for a given index
-          //Iterate through Kanjis UP UNTIL current user level
+          console.log(responseBody);
+          const CURRENT_USER_LEVEL = responseBody[1].data.level;
 
-          //Save them into chrome.storage.sync (caching)
-
-          //Iterate through regex set of kanjis, if kanji from wani-kani API is in regex set,
-          // then perform the regex replacement
-
-          //TODO:
+          //Adding kanjis to a set
+          let i = 439; //Part in API array where kanji's begin
+          let kanjiSet = new Set();
+          while (i < 1000) {
+            if (responseBody[0].data[i].data.level <= CURRENT_USER_LEVEL) {
+              kanjiSet.add(responseBody[0].data[i].data.characters);
+            }
+            i++;
+          }
+          console.log(kanjiSet);
         });
     }
   },
