@@ -1,4 +1,5 @@
 /*Script which renders functions in the chrome extension "popup" */
+import { apifunction } from "./apifunction.js";
 
 /*Event listener which attaches this even handler once the DOM has loaded the content of a page */
 document.addEventListener(
@@ -25,76 +26,78 @@ document.addEventListener(
 
     /*On submit button, authorize users API key */
     function onSubmit() {
-      var apiToken = document.getElementById("API-Input").value;
-
-      var apiSubjectEndPointPath_1 = "subjects?page_after_id=439";
-      var apiSubjectEndPointPath_2 = "subjects?page_after_id=1439";
-      /*TODO:subjectendpoint path 3, there are still some kanjis for level 60 on the next page of subjects */
-      var apiUserEndPointPath = "user";
-
-      /*Header authenticates the request with the user's api token  */
-      var requestHeaders = new Headers({
-        Authorization: "Bearer " + apiToken,
-      });
-
-      /*Creating Vocabulary Request object */
-      var apiSubjectEndpoint_1 = new Request(
-        "https://api.wanikani.com/v2/" + apiSubjectEndPointPath_1,
-        {
-          method: "GET",
-          headers: requestHeaders,
+      //Check chrome storage to see if user has input the api token in before
+      chrome.storage.sync.get('user_token', function (data) {
+        //if user has not put in the api token, add it to the storage
+        var apiToken
+        if (!data["user_token"]) {
+          apiToken = document.getElementById("API-Input").value;
+          chrome.storage.sync.set({ 'user_token': apiToken });
+          console.log("FIRST TIME USER EH")
         }
-      );
-      /*Creating 2nd set of Vocabulary Request object */
-      var apiSubjectEndpoint_2 = new Request(
-        "https://api.wanikani.com/v2/" + apiSubjectEndPointPath_2,
-        {
-          method: "GET",
-          headers: requestHeaders,
+        //if user has already put in api token, just use what is in storage
+        //TODO: Make it so if user has already put in API token, they don't have to press submit 
+        else {
+          apiToken = data.user_token
+          console.log("WE ALREADY GOT YO SHIT " + String(data.user_token))
         }
-      );
+        //Perform operation on given apiToken
+        var apiSubjectEndPointPath_1 = "subjects?page_after_id=439";
+        var apiSubjectEndPointPath_2 = "subjects?page_after_id=1439";
+        /*TODO:subjectendpoint path 3, there are still some kanjis for level 60 on the next page of subjects */
 
-      /*Creating user Request object*/
-      var apiUserEndpoint = new Request(
-        "https://api.wanikani.com/v2/" + apiUserEndPointPath,
-        {
-          method: "GET",
-          headers: requestHeaders,
-        }
-      );
+        var apiUserEndPointPath = "user";
 
-      //Making calls to subject/user endpoints
-      Promise.all([
-        fetch(apiSubjectEndpoint_1),
-        fetch(apiSubjectEndpoint_2),
-        fetch(apiUserEndpoint),
-      ])
-        .then(async ([subject_1, subject_2, user]) => {
-          //destructuring promises
-          const subject_data_1 = await subject_1.json(); //jsonify each endpoint
-          const subject_data_2 = await subject_2.json();
-          const user_data = await user.json();
-          return [subject_data_1, subject_data_2, user_data]; //return an array of jsons
-        })
-        .then((responseBody) => {
-          console.log(responseBody);
-          const CURRENT_USER_LEVEL = responseBody[2].data.level;
-
-          //Adding kanjis to a set (probably move this to its own function)
-          let i = 0; //Part in API array where kanji's begin
-          let kanjiSet = new Set(); //TODO: add this to cache once its completed
-          while (i < 1000) {
-            if (responseBody[0].data[i].data.level <= CURRENT_USER_LEVEL) {
-              kanjiSet.add(responseBody[0].data[i].data.characters);
-            }
-            if (responseBody[1].data[i].data.level <= CURRENT_USER_LEVEL) {
-              kanjiSet.add(responseBody[1].data[i].data.characters);
-            }
-            i++;
-          }
-          console.log(kanjiSet);
+        /*Header authenticates the request with the user's api token  */
+        var requestHeaders = new Headers({
+          Authorization: "Bearer " + apiToken,
         });
+
+        /*Creating Vocabulary Request object */
+        var apiSubjectEndpoint_1 = new Request(
+          "https://api.wanikani.com/v2/" + apiSubjectEndPointPath_1,
+          {
+            method: "GET",
+            headers: requestHeaders,
+          }
+        );
+        /*Creating 2nd set of Vocabulary Request object */
+        var apiSubjectEndpoint_2 = new Request(
+          "https://api.wanikani.com/v2/" + apiSubjectEndPointPath_2,
+          {
+            method: "GET",
+            headers: requestHeaders,
+          }
+        );
+
+        /*Creating user Request object*/
+        var apiUserEndpoint = new Request(
+          "https://api.wanikani.com/v2/" + apiUserEndPointPath,
+          {
+            method: "GET",
+            headers: requestHeaders,
+          }
+        );
+
+        //Making calls to subject/user endpoints
+        Promise.all([
+          fetch(apiSubjectEndpoint_1),
+          fetch(apiSubjectEndpoint_2),
+          fetch(apiUserEndpoint),
+        ])
+          .then(async ([subject_1, subject_2, user]) => {
+            //destructuring promises
+            const subject_data_1 = await subject_1.json(); //jsonify each endpoint
+            const subject_data_2 = await subject_2.json();
+            const user_data = await user.json();
+            return [subject_data_1, subject_data_2, user_data]; //return an array of jsons
+          })
+          .then(apifunction); //call api function to manipulate data*/
+      });
     }
   },
   false
 );
+
+
+

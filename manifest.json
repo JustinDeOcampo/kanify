@@ -14,7 +14,7 @@
     "default_icon": "kanify.png",
     "default_title": "Kanify"
   },
-
+  "permissions": ["storage"],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
