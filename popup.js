@@ -1,5 +1,5 @@
 /*Script which renders functions in the chrome extension "popup" */
-import { apifunction } from "./apifunction.js";
+import { apifunction, createRequest } from "./apifunction.js";
 
 /*Event listener which attaches this even handler once the DOM has loaded the content of a page */
 document.addEventListener(
@@ -23,61 +23,42 @@ document.addEventListener(
     //////////////////////////////////////////////////////////////////////////
     /*Handles submission of API-Key by user */
     document.getElementById("API-Submit").addEventListener("click", onSubmit);
-
     /*On submit button, authorize users API key */
     function onSubmit() {
       //Check chrome storage to see if user has input the api token in before
-      chrome.storage.sync.get('user_token', function (data) {
+      chrome.storage.sync.get("user_token", function (data) {
+        var apiToken;
         //if user has not put in the api token, add it to the storage
-        var apiToken
         if (!data["user_token"]) {
           apiToken = document.getElementById("API-Input").value;
-          chrome.storage.sync.set({ 'user_token': apiToken });
-          console.log("FIRST TIME USER EH")
+          chrome.storage.sync.set({ user_token: apiToken });
+          console.log("We just saved your token: " + apiToken);
         }
         //if user has already put in api token, just use what is in storage
-        //TODO: Make it so if user has already put in API token, they don't have to press submit 
         else {
-          apiToken = data.user_token
-          console.log("WE ALREADY GOT YO SHIT " + String(data.user_token))
+          apiToken = data.user_token;
+          console.log("Your token has been loaded: " + String(data.user_token));
         }
-        //Perform operation on given apiToken
-        var apiSubjectEndPointPath_1 = "subjects?page_after_id=439";
-        var apiSubjectEndPointPath_2 = "subjects?page_after_id=1439";
+
+        //TODO: Make it so if user has already put in API token, the html input doesnt get rendered
+
+        ///////////////////////////////////////////////////////////////////
         /*TODO:subjectendpoint path 3, there are still some kanjis for level 60 on the next page of subjects */
 
+        //Saving API endpoints we want to access to variables
+        var apiSubjectEndPointPath_1 = "subjects?page_after_id=439";
+        var apiSubjectEndPointPath_2 = "subjects?page_after_id=1439";
         var apiUserEndPointPath = "user";
-
-        /*Header authenticates the request with the user's api token  */
-        var requestHeaders = new Headers({
-          Authorization: "Bearer " + apiToken,
-        });
-
-        /*Creating Vocabulary Request object */
-        var apiSubjectEndpoint_1 = new Request(
-          "https://api.wanikani.com/v2/" + apiSubjectEndPointPath_1,
-          {
-            method: "GET",
-            headers: requestHeaders,
-          }
+        //Creating request objects with given endpoints
+        var apiSubjectEndpoint_1 = createRequest(
+          apiSubjectEndPointPath_1,
+          apiToken
         );
-        /*Creating 2nd set of Vocabulary Request object */
-        var apiSubjectEndpoint_2 = new Request(
-          "https://api.wanikani.com/v2/" + apiSubjectEndPointPath_2,
-          {
-            method: "GET",
-            headers: requestHeaders,
-          }
+        var apiSubjectEndpoint_2 = createRequest(
+          apiSubjectEndPointPath_2,
+          apiToken
         );
-
-        /*Creating user Request object*/
-        var apiUserEndpoint = new Request(
-          "https://api.wanikani.com/v2/" + apiUserEndPointPath,
-          {
-            method: "GET",
-            headers: requestHeaders,
-          }
-        );
+        var apiUserEndpoint = createRequest(apiUserEndPointPath, apiToken);
 
         //Making calls to subject/user endpoints
         Promise.all([
@@ -98,6 +79,3 @@ document.addEventListener(
   },
   false
 );
-
-
-
