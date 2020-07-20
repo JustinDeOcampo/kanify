@@ -37,43 +37,78 @@ document.addEventListener(
         //if user has already put in api token, just use what is in storage
         else {
           apiToken = data.user_token;
-          console.log("Your token has been loaded: " + String(data.user_token));
+          console.log(
+            "Your token has been loaded from storage: " +
+              String(data.user_token)
+          );
         }
 
         //TODO: Make it so if user has already put in API token, the html input doesnt get rendered
 
         ///////////////////////////////////////////////////////////////////
-        /*TODO:subjectendpoint path 3, there are still some kanjis for level 60 on the next page of subjects */
-
-        //Saving API endpoints we want to access to variables
-        var apiSubjectEndPointPath_1 = "subjects?page_after_id=439";
-        var apiSubjectEndPointPath_2 = "subjects?page_after_id=1439";
-        var apiUserEndPointPath = "user";
-        //Creating request objects with given endpoints
-        var apiSubjectEndpoint_1 = createRequest(
-          apiSubjectEndPointPath_1,
-          apiToken
-        );
-        var apiSubjectEndpoint_2 = createRequest(
-          apiSubjectEndPointPath_2,
-          apiToken
-        );
-        var apiUserEndpoint = createRequest(apiUserEndPointPath, apiToken);
-
-        //Making calls to subject/user endpoints
-        Promise.all([
-          fetch(apiSubjectEndpoint_1),
-          fetch(apiSubjectEndpoint_2),
-          fetch(apiUserEndpoint),
-        ])
-          .then(async ([subject_1, subject_2, user]) => {
-            //destructuring promises
-            const subject_data_1 = await subject_1.json(); //jsonify each endpoint
-            const subject_data_2 = await subject_2.json();
-            const user_data = await user.json();
-            return [subject_data_1, subject_data_2, user_data]; //return an array of jsons
-          })
-          .then(apifunction); //call api function to manipulate data*/
+        chrome.storage.sync.get("last_modified", function (data) {
+          var appendable;
+          //if last modified date exists in storage, append it to the request header
+          if (data.last_modified) {
+            var last_modified_date = data.last_modified;
+            appendable = last_modified_date;
+          } else {
+            appendable = null;
+          }
+          //Saving API endpoints we want to access to variables
+          var apiSubjectEndPointPath_1 = "subjects?page_after_id=439";
+          var apiSubjectEndPointPath_2 = "subjects?page_after_id=1439";
+          var apiUserEndPointPath = "user";
+          //Creating request objects with given endpoints
+          var apiSubjectEndpoint_1 = createRequest(
+            apiSubjectEndPointPath_1,
+            apiToken,
+            appendable
+          );
+          var apiSubjectEndpoint_2 = createRequest(
+            apiSubjectEndPointPath_2,
+            apiToken,
+            appendable
+          );
+          var apiUserEndpoint = createRequest(
+            apiUserEndPointPath,
+            apiToken,
+            appendable
+          );
+          //Making calls to subject/user endpoints
+          Promise.all([
+            fetch(apiSubjectEndpoint_1),
+            fetch(apiSubjectEndpoint_2),
+            fetch(apiUserEndpoint),
+          ])
+            .then(async ([subject_1, subject_2, user]) => {
+              //adding last modified-dates to storage
+              chrome.storage.sync.set({
+                last_modified: user.headers.get("last-modified"),
+              });
+              // if API data with storage is not up to date, storage the API data in an array
+              if (user.status === 401) {
+                console.log(
+                  "You did not enter a valid API key! Please try again"
+                );
+                return [];
+              } else if (user.status !== 304) {
+                console.log(
+                  "We are retrieving ur info for the first time. Code: " +
+                    user.status
+                );
+                //destructuring promises
+                const subject_data_1 = await subject_1.json(); //jsonify each endpoint
+                const subject_data_2 = await subject_2.json();
+                const user_data = await user.json();
+                return [subject_data_1, subject_data_2, user_data]; //return an array of jsons
+              } else {
+                console.log("Made 0 API calls!");
+                return [];
+              }
+            })
+            .then(apifunction); //call api function to manipulate data*/
+        });
       });
     }
   },
