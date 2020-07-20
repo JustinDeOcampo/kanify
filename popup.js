@@ -106,7 +106,6 @@ document.addEventListener(
                 );
                 //destructuring promises and jsonify the body of data
                 const user_data = await user.json();
-                console.log(user_data);
                 const subject_data_1 = await subject_1.json();
                 const subject_data_2 = await subject_2.json();
 
