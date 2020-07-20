@@ -46,7 +46,7 @@ function apifunction(responseBody) {
       chrome.storage.sync.set({ kanji: [...kanji_set] }); //spread operator takes every variable and places it there
     } else {
       kanji_set = new Set(data.kanji);
-      console.log("Kanji set loaded from storage:");
+      console.log("Kanji loaded from storage:");
       console.log(kanji_set);
     }
   });

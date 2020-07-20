@@ -46,14 +46,13 @@ document.addEventListener(
         //TODO: Make it so if user has already put in API token, the html input doesnt get rendered
 
         ///////////////////////////////////////////////////////////////////
-        chrome.storage.sync.get("last_modified", function (data) {
-          var appendable;
+        chrome.storage.sync.get(["last_modified_user"], function (data) {
+          var appendable_user;
           //if last modified date exists in storage, append it to the request header
-          if (data.last_modified) {
-            var last_modified_date = data.last_modified;
-            appendable = last_modified_date;
+          if (data.last_modified_user) {
+            appendable_user = data.last_modified_user;
           } else {
-            appendable = null;
+            appendable_user = null;
           }
           //Saving API endpoints we want to access to variables
           var apiSubjectEndPointPath_1 = "subjects?page_after_id=439";
@@ -63,17 +62,17 @@ document.addEventListener(
           var apiSubjectEndpoint_1 = createRequest(
             apiSubjectEndPointPath_1,
             apiToken,
-            appendable
+            null
           );
           var apiSubjectEndpoint_2 = createRequest(
             apiSubjectEndPointPath_2,
             apiToken,
-            appendable
+            null
           );
           var apiUserEndpoint = createRequest(
             apiUserEndPointPath,
             apiToken,
-            appendable
+            appendable_user
           );
           //Making calls to subject/user endpoints
           Promise.all([
@@ -84,7 +83,9 @@ document.addEventListener(
             .then(async ([subject_1, subject_2, user]) => {
               //adding last modified-dates to storage
               chrome.storage.sync.set({
-                last_modified: user.headers.get("last-modified"),
+                last_modified_user: user.headers.get("last-modified"),
+                last_modified_subject_1: subject_1.headers.get("last-modified"),
+                last_modified_subject_2: subject_2.headers.get("last-modified"),
               });
               //If 401, user did not enter valid api key
               if (user.status === 401) {
@@ -103,10 +104,12 @@ document.addEventListener(
                   "We are retrieving ur info for the first time. Code: " +
                     user.status
                 );
-                //destructuring promises
-                const subject_data_1 = await subject_1.json(); //jsonify each endpoint
-                const subject_data_2 = await subject_2.json();
+                //destructuring promises and jsonify the body of data
                 const user_data = await user.json();
+                console.log(user_data);
+                const subject_data_1 = await subject_1.json();
+                const subject_data_2 = await subject_2.json();
+
                 return [subject_data_1, subject_data_2, user_data]; //return an array of jsons
               }
             })
