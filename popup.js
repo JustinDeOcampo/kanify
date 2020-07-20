@@ -86,13 +86,19 @@ document.addEventListener(
               chrome.storage.sync.set({
                 last_modified: user.headers.get("last-modified"),
               });
-              // if API data with storage is not up to date, storage the API data in an array
+              //If 401, user did not enter valid api key
               if (user.status === 401) {
                 console.log(
                   "You did not enter a valid API key! Please try again"
                 );
                 return [];
-              } else if (user.status !== 304) {
+                //if 304, user data has not changed since last API access, so do not make any api calls
+              } else if (user.status === 304) {
+                console.log("Made 0 API calls!");
+                return [];
+              }
+              //else, retrieve the user's information from the api
+              else {
                 console.log(
                   "We are retrieving ur info for the first time. Code: " +
                     user.status
@@ -102,9 +108,6 @@ document.addEventListener(
                 const subject_data_2 = await subject_2.json();
                 const user_data = await user.json();
                 return [subject_data_1, subject_data_2, user_data]; //return an array of jsons
-              } else {
-                console.log("Made 0 API calls!");
-                return [];
               }
             })
             .then(apifunction); //call api function to manipulate data*/

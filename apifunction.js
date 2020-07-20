@@ -9,8 +9,7 @@ function apifunction(responseBody) {
   //Save user's current level
   var CURRENT_USER_LEVEL;
   chrome.storage.sync.get("current_user_level", function (storage_data) {
-    //if user level is not in storage, add it to storage
-    // OR if user level in storage doesnt match up with the current API, update storage
+    //if user level is not in storage or if the level in storage doesnt match up with the current API data, update storage
     if (
       responseBody.length === 3 &&
       (!storage_data["current_user_level"] ||
