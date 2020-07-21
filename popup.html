@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Kanify</title>
-    <script src="popup.js"></script>
-  </head>
-  <body>
-    <h1>Hello World, this is kanify</h1>
-  </body>
+
+<head>
+  <title>Kanify</title>
+  <style>
+    body {
+      font-size: 14px;
+      min-height: 180px;
+      width: 384px;
+    }
+
+    input[type="text"] {
+      width: 250px;
+      border-radius: 4px;
+      border-width: 1px;
+    }
+
+    .Input-Container {
+      flex: 1;
+      margin-bottom: 2.5%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <h1>Kanify (v1.0.0)</h1>
+    <div class="Input-Container">
+      <label for="API-Input">Wani Kani v2 API Key</label><br />
+      <input id="API-Input" type="text" placeholder="Please paste Wani Kani v2 API Key here" /><br />
+      <button id="API-Submit" type="button">Kanify me!</button>
+    </div>
+    <script type="module" src="popup.js" charset="utf-8"></script>
+  </div>
+</body>
+
 </html>
+
+<!--Make the api key thing only render if there is nothing in async storage-->
