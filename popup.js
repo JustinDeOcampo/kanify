@@ -16,7 +16,7 @@ document.addEventListener(
 
     function setCount(res) {
       const div = document.createElement("div");
-      div.textContent = `${res.count} kanji, and ${res.check}`; // adds a div with this on it
+      div.textContent = `${res.count} kanji`; // adds a div with this on it
       document.body.appendChild(div); // appends the new div above
     }
 
