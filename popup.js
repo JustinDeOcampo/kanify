@@ -6,17 +6,25 @@ document.addEventListener(
   "DOMContentLoaded",
   function () {
     ////////////////////////////////////////////////////////////////////////////
-    document.querySelector("button").addEventListener("click", onclick, false);
-
+    //document.querySelector("button").addEventListener("click", onclick, false);
+    document.getElementById("Kanify").addEventListener("click", onclick);
     function onclick() {
+      
       chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, "heyo", setCount); // does setCount function below
+        chrome.tabs.sendMessage(tabs[0].id, "message here", setCount)
+
+          // if(chrome.storage.sync.get('kanji')){ // i want to access kanji set because
+          //       chrome.tabs.sendMessage(tabs[0].id, "heyo", setCount); // does setCount function below
+          // }
+          // else{
+          //     console.log("No Kanji on page yet silly goose")
+          // }
       });
     }
 
     function setCount(res) {
       const div = document.createElement("div");
-      div.textContent = `${res.count} kanji, and ${res.check}`; // adds a div with this on it
+      div.textContent = `${res.count} kanji and you know ${res.known_count}`; // adds a div with this on it ${res.count}
       document.body.appendChild(div); // appends the new div above
     }
 
