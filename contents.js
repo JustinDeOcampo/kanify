@@ -51,7 +51,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     let kanji_set = new Set(data_storage.kanji) //convert back to set
 
     //List of all tags that could contain kanji
-    tag_list = ['h1','h2','h3','h4','h5','p','a','li']
+    tag_list = ['h1','h2','h3','h4','h5','p','a','li', 'tr']
     //Iterate through all tags in tag_list
     for(tag of tag_list){
       //Find all tags on screen that belong to tag
