@@ -20,8 +20,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   // }
   function replacer(match){ // function to set the class to "highlight"
-    //console.log(match)
     // vvv this doesn't work darnit
+    //console.log(match)
     //var styler = match.style.color = '#FF00FF' 
     //can't use .setAttribute smhhhh
     //var attribute = match.setAttribute("class", "highlight");
