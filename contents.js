@@ -32,15 +32,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 
 
-  function highlight(tag,text) {
+  function highlight_character(tag,character) {
     var innerHTML = tag.innerHTML;
-    var index = innerHTML.indexOf(text);
-    innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + innerHTML.substring(index,index+text.length) + "</span>" + innerHTML.substring(index + text.length);
+    var index = innerHTML.indexOf(character);
+    innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + innerHTML.substring(index,index+1) + "</span>" + innerHTML.substring(index+1);
     tag.innerHTML = innerHTML;
   }
 
-  var highlighted = document.getElementsByClassName("highlight")
-  
   
   
   var known_kanji_count = 0
@@ -64,12 +62,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         if (regex) {
           console.log('hi')
           //captured.style['background-color'] = '#FF00FF'
-          highlight(captured,regex[0])
+          
+          text = captured.textContent
+          for(var i = 0; i < text.length; i++){
+            if(kanji_set.has(text.charAt(i))){
+              highlight_character(captured, text.charAt(i))
+            }
+          }
         }
       }
     }
 
-    for(highlight of highlighted){
+    var highlighted = document.getElementsByClassName("highlight")
+    for(highlight of highlighted){ // does the highlighting
       highlight.style['background-color'] = '#FF11FF'
     }
 
@@ -81,8 +86,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           //console.log(matches[i])
           //matches[i].setAttribute('class', 'highlight')
           //var highlightedboi = matches[i].replace(re, replacer)
-
-          
 
       }
     }
