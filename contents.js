@@ -1,105 +1,114 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   const re = new RegExp("[\u4e00-\u9faf]+", "igm"); // regular expression
   const matches = document.documentElement.innerHTML.match(re); // array of all kanji on page //Contains the set of all kanjis read on the page
-  /*const kanjiSet = new Set(matches);*/
-  
 
-  /* NEW IDEA //////////////////////////////////////////////
-  skip the regex, just get all text on doc, if it matches the kanji,
-  grab it directly and replace
-  */
-  
-///////////////////////////////////////////////////////
-
-
-  //.replace attempt
-
-  // for( var i = 0; i < matches.length; i++){
-  //   var highlightedboi = matches[i].replace(re, replacer)
-  //   console.log(highlightedboi)
-
-  // }
-  function replacer(match){ // function to set the class to "highlight"
-    // vvv this doesn't work darnit
-    //console.log(match)
-    //var styler = match.style.color = '#FF00FF' 
-    //can't use .setAttribute smhhhh
-    //var attribute = match.setAttribute("class", "highlight");
-    return attribute;
+  //TODO: 
+  const CURRENT_URL = request
+  //Regex expression to check if on youtube 
+  function ytVidId(url) {
+    var p = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/
+    return (url.match(p)) ? true : false;
   }
-  
-
-
-
-
-  function highlight_character(tag,character) {
-    var innerHTML = tag.innerHTML;
-    var index = innerHTML.indexOf(character);
-    innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + innerHTML.substring(index,index+1) + "</span>" + innerHTML.substring(index+1);
-    tag.innerHTML = innerHTML;
+  /*Finds the index of the kanji and then injects a span with a highlighted style to it */
+  function highlight_character(tag, character, index, kanjis_replaced_counter) {
+    //Saving the text content to a variable
+    let innerHTML = tag.innerHTML;
+    // this is how many characters are in the "hightlight" span
+    const width_of_span = 31;
+    //Grabbing correct index to slice at
+    let updated_index = innerHTML.indexOf(
+      character,
+      index + kanjis_replaced_counter * width_of_span //Slice it into the correct index based off of how many spans we have already added
+    );
+    //Slicing the highlighted kanji into the text content
+    let new_innerHTML =
+      innerHTML.substring(0, updated_index) +
+      "<span class='highlight'>" +
+      innerHTML.substring(updated_index, updated_index + 1) +
+      "</span>" +
+      innerHTML.substring(updated_index + 1);
+    console.log(new_innerHTML);
+    //Inject the updated content into the page
+    tag.innerHTML = new_innerHTML;
   }
 
-  
-  
-  var known_kanji_count = 0
-  chrome.storage.sync.get('kanji', function(data_storage){ 
-    if(!data_storage.kanji){
-        console.log("load your API First")
+  known_kanji_count = 0;
+  chrome.storage.sync.get("kanji", function (data_storage) {
+    if (!data_storage.kanji) {
+      console.log("load your API First");
     }
 
-    console.log(data_storage.kanji) // printing as an array
-    let kanji_set = new Set(data_storage.kanji) //convert back to set
+    console.log(data_storage.kanji); // printing as an array
+    let kanji_set = new Set(data_storage.kanji); //convert back to set
+    let tag_list
+    let isYoutube = ytVidId(CURRENT_URL)
 
-    //List of all tags that could contain kanji
-    tag_list = ['h1','h2','h3','h4','h5','p','a','li', 'tr']
+    if (isYoutube) {
+      tag_list = [
+        "yt-formatted-string",
+        "span",
+      ]
+    }
+    else {
+      tag_list = [
+        "span",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "p",
+        "a",
+        "li",
+        "tr",
+        "td",
+        "ruby",
+      ];
+    }
     //Iterate through all tags in tag_list
-    for(tag of tag_list){
+    for (tag of tag_list) {
       //Find all tags on screen that belong to tag
-      var capt_tags = document.getElementsByTagName(tag)
-      for(captured of capt_tags){
-        //Run regex that looks for all known kanji in the tag text content
-        regex = new RegExp(data_storage.kanji.join("|")).exec(captured.textContent)
+      var capt_tags = document.querySelectorAll(`${tag}:not(.highlight)`);
+
+      for (captured of capt_tags) {
+        let text = captured.textContent;
+        let kanjis_replaced_counter = 0;
+        //Run regex that checks for if the tag includes kanjis that we know from wani kani
+        regex = new RegExp(data_storage.kanji.join("|")).exec(text);
+        //If the tag contains known kanjis,
         if (regex) {
-          console.log('hi')
-          //captured.style['background-color'] = '#FF00FF'
-          
-          text = captured.textContent
-          for(var i = 0; i < text.length; i++){
-            if(kanji_set.has(text.charAt(i))){
-              highlight_character(captured, text.charAt(i))
+          //iterate through each character in the text content
+          for (var i = 0; i < text.length; i++) {
+            //If the kanji we found is known in wani kani, highlight it
+            if (kanji_set.has(text.charAt(i))) {
+              highlight_character(
+                captured,
+                text.charAt(i),
+                i,
+                kanjis_replaced_counter
+              );
+              kanjis_replaced_counter += 1;
+              known_kanji_count += 1;
             }
           }
         }
       }
     }
 
-    var highlighted = document.getElementsByClassName("highlight")
-    for(highlight of highlighted){ // does the highlighting
-      highlight.style['background-color'] = '#FF11FF'
+    var highlighted = document.getElementsByClassName("highlight");
+    for (highlight of highlighted) {
+      // does the highlighting
+      highlight.style["background-color"] = "#FF11FF";
     }
+  });
+  let count
+  if (matches.length !== null) {
+    count = matches.length
+  }
+  else {
+    count = 0
+  }
 
-    
-    for(var i = 0; i < matches.length; i++ ){
-      if(kanji_set.has(matches[i])){
-          console.log('known kanji count + 1')
-          known_kanji_count = known_kanji_count + 1
-          //console.log(matches[i])
-          //matches[i].setAttribute('class', 'highlight')
-          //var highlightedboi = matches[i].replace(re, replacer)
-
-      }
-    }
-    document.querySelectorAll('*').forEach(function(node){
-
-    });
-    //if we change the attributes, we will change styling like this
-    let highlighterGuys = document.getElementsByClassName('highlight')
-    for(character of highlighterGuys){
-      character.style['background-color'] = '#FF00FF';
-    }
-    
-  })
-  known_kanji_count = known_kanji_count + 1
-  sendResponse({ count: matches.length, known_count: known_kanji_count });
-   // sends to popup.js
+  sendResponse({ count: count, known_count: known_kanji_count });
+  // sends to popup.js
 });
