@@ -2,7 +2,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   const re = new RegExp("[\u4e00-\u9faf]+", "igm"); // regular expression
   const matches = document.documentElement.innerHTML.match(re); // array of all kanji on page //Contains the set of all kanjis read on the page
 
-  //TODO: 
+  /* TODO:
+  -Have it activate upon scrolling to new content
+  -Have it activate automatically on a new page
+  -Hotkey option for highlighting 
+  -Style html
+    -First login: only show api key input
+    -Rest of logins: 
+      -Kanify me button
+      -Settings
+        -For re-inputting api key
+        -Toggle automatic kanji highlighting vs hotkey
+  -Clean up bug where theres no the kanji page 
+  */
   const CURRENT_URL = request
   //Regex expression to check if on youtube 
   function ytVidId(url) {
