@@ -21,6 +21,9 @@ document.addEventListener(
     }
 
     //////////////////////////////////////////////////////////////////////////
+    //Periodically check if we need to make api calls every three hours
+    setInterval(onSubmit, 1000 * 60 * 3);
+    //////////////////////////////////////////////////////////////////////////
     /*Handles submission of API-Key by user */
     document.getElementById("API-Submit").addEventListener("click", onSubmit);
     /*On submit button, authorize users API key */
@@ -39,11 +42,9 @@ document.addEventListener(
           apiToken = data.user_token;
           console.log(
             "Your token has been loaded from storage: " +
-            String(data.user_token)
+              String(data.user_token)
           );
         }
-
-        //TODO: Make it so if user has already put in API token, the html input doesnt get rendered
 
         ///////////////////////////////////////////////////////////////////
         chrome.storage.sync.get(["last_modified_user"], function (data) {
@@ -89,9 +90,10 @@ document.addEventListener(
               });
               //If 401, user did not enter valid api key
               if (user.status === 401) {
-                console.log(
-                  "You did not enter a valid API key! Please try again"
-                );
+                if (document.getElementById("API-Input").value) {
+                  alert("You did not enter a valid API key! Please try again");
+                  chrome.storage.sync.remove("user_token");
+                }
                 return [];
                 //if 304, user data has not changed since last API access, so do not make any api calls
               } else if (user.status === 304) {
@@ -100,10 +102,7 @@ document.addEventListener(
               }
               //else, retrieve the user's information from the api
               else {
-                console.log(
-                  "We are retrieving ur info for the first time. Code: " +
-                  user.status
-                );
+                alert("Successful! You are now ready to use Kanify");
                 //destructuring promises and jsonify the body of data
                 const user_data = await user.json();
                 const subject_data_1 = await subject_1.json();

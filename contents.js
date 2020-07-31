@@ -15,11 +15,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         -Toggle automatic kanji highlighting vs hotkey
   -Clean up bug where theres no the kanji page 
   */
-  const CURRENT_URL = request
-  //Regex expression to check if on youtube 
+  const CURRENT_URL = request;
+  //Regex expression to check if on youtube
   function ytVidId(url) {
-    var p = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/
-    return (url.match(p)) ? true : false;
+    var p = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
+    return url.match(p) ? true : false;
   }
   /*Finds the index of the kanji and then injects a span with a highlighted style to it */
   function highlight_character(tag, character, index, kanjis_replaced_counter) {
@@ -47,21 +47,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   known_kanji_count = 0;
   chrome.storage.sync.get("kanji", function (data_storage) {
     if (!data_storage.kanji) {
-      console.log("load your API First");
+      alert("Please load your API token First");
     }
 
-    console.log(data_storage.kanji); // printing as an array
     let kanji_set = new Set(data_storage.kanji); //convert back to set
-    let tag_list
-    let isYoutube = ytVidId(CURRENT_URL)
+    let tag_list;
+    let isYoutube = ytVidId(CURRENT_URL);
 
     if (isYoutube) {
-      tag_list = [
-        "yt-formatted-string",
-        "span",
-      ]
-    }
-    else {
+      tag_list = ["yt-formatted-string", "span"];
+    } else {
       tag_list = [
         "span",
         "h1",
@@ -113,14 +108,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       highlight.style["background-color"] = "#FF11FF";
     }
   });
-  let count
-  if (matches.length !== null) {
-    count = matches.length
-  }
-  else {
-    count = 0
-  }
 
-  sendResponse({ count: count, known_count: known_kanji_count });
+  sendResponse({ count: matches.length, known_count: known_kanji_count });
   // sends to popup.js
 });
