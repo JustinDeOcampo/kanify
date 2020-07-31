@@ -94,7 +94,6 @@ document.addEventListener(
                 chrome.browserAction.setPopup({
                   popup: "../html_files/normal.html",
                 });
-                window.close();
                 return [subject_data_1, subject_data_2, user_data]; //return an array of jsons
               }
             })

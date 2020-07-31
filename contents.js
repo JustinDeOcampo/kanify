@@ -7,7 +7,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   -Have it activate automatically on a new page
   -Hotkey option for highlighting 
   -Style html
-    -First login: only show api key input
     -Rest of logins: 
       -Kanify me button
       -Settings
@@ -46,6 +45,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   known_kanji_count = 0;
   chrome.storage.sync.get("kanji", function (data_storage) {
+    console.log(data_storage.kanji);
     if (!data_storage.kanji) {
       alert("Please load your API token First");
     }
