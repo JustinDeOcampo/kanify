@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("Kanify").addEventListener("click", onclick);
+  //triggered when the kanify button is clicked
   function onclick() {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+      //sends the content of the current tab to the content script
       chrome.tabs.sendMessage(tabs[0].id, tabs[0].url, setCount);
     });
   }

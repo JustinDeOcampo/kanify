@@ -50,7 +50,6 @@ function apifunction(responseBody) {
       console.log(kanji_set);
     }
   });
-  window.close();
 }
 
 const createRequest = (endpointpath, apiToken, last_modified_date) => {
