@@ -5,22 +5,6 @@ import { apifunction, createRequest } from "./apifunction.js";
 document.addEventListener(
   "DOMContentLoaded",
   function () {
-    ////////////////////////////////////////////////////////////////////////////
-    //document.querySelector("button").addEventListener("click", onclick, false);
-    document.getElementById("Kanify").addEventListener("click", onclick);
-    function onclick() {
-      chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, tabs[0].url, setCount);
-      });
-    }
-
-    function setCount(res) {
-      const div = document.createElement("div");
-      div.textContent = `${res.count} kanji and you know ${res.known_count}`; // adds a div with this on it ${res.count}
-      document.body.appendChild(div); // appends the new div above
-    }
-
-    //////////////////////////////////////////////////////////////////////////
     //Periodically check if we need to make api calls every three hours
     setInterval(onSubmit, 1000 * 60 * 3);
     //////////////////////////////////////////////////////////////////////////
@@ -107,7 +91,9 @@ document.addEventListener(
                 const user_data = await user.json();
                 const subject_data_1 = await subject_1.json();
                 const subject_data_2 = await subject_2.json();
-
+                chrome.browserAction.setPopup({
+                  popup: "../html_files/normal.html",
+                });
                 return [subject_data_1, subject_data_2, user_data]; //return an array of jsons
               }
             })
