@@ -1,4 +1,5 @@
 import { apifunction, createRequest } from "./apifunction.js";
+import { apiInputRenderer, settingsInputRenderer, apiInputRemover } from './interface_renderer.js'
 /*On submit button, authorize users API key */
 export function onAPIInputSubmit() {
     //Check chrome storage to see if user has input the api token in before
@@ -87,7 +88,7 @@ export function onAPIInputSubmit() {
                         return [subject_data_1, subject_data_2, user_data, user.status]; //return an array of jsons
                     }
                 })
-                .then(apifunction).then((status_code) => { if (status_code === 200) { } }); //call api function to manipulate data*/
+                .then(apifunction).then((status_code) => { if (status_code === 200) { settingsInputRenderer(); apiInputRemover(); } }); //call api function to manipulate data*/
         });
     });
 }
