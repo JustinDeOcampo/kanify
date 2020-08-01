@@ -14,6 +14,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         -Toggle automatic kanji highlighting vs hotkey
   -Clean up bug where theres no the kanji page 
   */
+
   const CURRENT_URL = request;
   //Regex expression to check if on youtube
   function ytVidId(url) {
@@ -38,7 +39,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       innerHTML.substring(updated_index, updated_index + 1) +
       "</span>" +
       innerHTML.substring(updated_index + 1);
-    console.log(new_innerHTML);
     //Inject the updated content into the page
     tag.innerHTML = new_innerHTML;
   }

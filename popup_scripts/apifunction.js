@@ -11,7 +11,7 @@ function apifunction(responseBody) {
   chrome.storage.sync.get("current_user_level", function (storage_data) {
     //if user level is not in storage or if the level in storage doesnt match up with the current API data, update storage
     if (
-      responseBody.length === 3 &&
+      responseBody.length === 4 &&
       (!storage_data["current_user_level"] ||
         storage_data["current_user_level"] != responseBody[2].data.level)
     ) {
@@ -50,6 +50,7 @@ function apifunction(responseBody) {
       console.log(kanji_set);
     }
   });
+  return responseBody[3]
 }
 
 const createRequest = (endpointpath, apiToken, last_modified_date) => {
