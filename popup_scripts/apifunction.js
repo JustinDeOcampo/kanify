@@ -34,6 +34,7 @@ function apifunction(responseBody) {
     if (!data.kanji || hasModified) {
       let i = 0;
       while (i < 1000) {
+        //if the level of the kanji is less than or equal to the user's level, add it to the set
         if (responseBody[0].data[i].data.level <= CURRENT_USER_LEVEL) {
           kanji_set.add(responseBody[0].data[i].data.characters);
         }
@@ -50,7 +51,8 @@ function apifunction(responseBody) {
       console.log(kanji_set);
     }
   });
-  return responseBody[3]
+  //returning the status code of the api call for future use
+  return responseBody[3];
 }
 
 const createRequest = (endpointpath, apiToken, last_modified_date) => {
