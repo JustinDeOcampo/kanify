@@ -1,12 +1,18 @@
-//This is triggered on click of the kanify button
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  const re = new RegExp("[\u4e00-\u9faf]", "igm"); // regular expression
-  const matches = document.documentElement.innerHTML.match(re); // array of all kanji on page //Contains the set of all kanjis read on the page
-  //Saving the current URL to a variable
-  const CURRENT_URL = request;
-  //Calling the highlight function
-  highlight_content(CURRENT_URL);
-  sendResponse({ count: matches.length, known_count: known_kanji_count });
+chrome.storage.sync.get("kanji", function (data_storage) {
+  //This is triggered on click of the kanify button
+  chrome.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    const re = new RegExp("[\u4e00-\u9faf]", "igm"); // regular expression
+    const matches = document.documentElement.innerHTML.match(re); // array of all kanji on page //Contains the set of all kanjis read on the page
+    //Saving the current URL to a variable
+    const CURRENT_URL = request;
+    //Calling the highlight function, pass in the current url and the storage data
+    let known_kanji_count = highlight_content(CURRENT_URL, data_storage);
+    sendResponse({ count: matches.length, known_count: known_kanji_count });
+  });
 });
 
 /* TODO:
