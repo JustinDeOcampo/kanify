@@ -1,7 +1,6 @@
 //This function renders the html for the API input screen
 export const apiInputRenderer = () => {
-  const div = document.createElement("div");
-  div.id = "API-Container";
+  const div = document.getElementById("Input-Container");
   div.innerHTML = `
     <label for="API-Input">Wani Kani v2 API Key</label><br />
       <input
@@ -11,15 +10,19 @@ export const apiInputRenderer = () => {
       /><br />
       <button id="API-Submit" type="button">Insert API key</button>
     `;
-  document.getElementsByClassName("Input-Container")[0].appendChild(div);
 };
 
 //This function renders the html for the kanify button screen
 export const settingsInputRenderer = () => {
-  const div = document.createElement("div");
-  div.className = "Kanify-Container";
-  div.innerHTML = `<button id="Kanify">Kanify Me!</button>`;
-  document.getElementsByClassName("Input-Container")[0].appendChild(div);
+  const div = document.getElementById("Input-Container");
+  div.innerHTML = `
+  <button class = "Kanify" id="Kanify">Kanify Me!</button>
+  <label class = "label">Enable kanify on page load</label>
+  <label class="switch">
+    <input type="checkbox" id="Page-Refresh" >
+    <span class="slider round"></span>
+  </label>
+  `;
 };
 
 //This function deletes the html for the API input screen
@@ -28,3 +31,10 @@ export const apiInputRemover = () => {
     .getElementById("Input-Container")
     .removeChild(document.getElementById("API-Container"));
 };
+
+/*
+<label class="switch">
+    <input type="checkbox" id="Page-Refresh" >
+    <span class="slider round"></span>
+  </label>
+*/

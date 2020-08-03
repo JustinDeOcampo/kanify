@@ -7,6 +7,8 @@ import {
 
 /*On submit button, authorize users API key */
 export function onAPIInputSubmit() {
+  //SAVE USERS DEFAULT SETTINGS TO CHROME STORAGE HERE
+  chrome.storage.sync.set({ page_refresh: false })
   //Check chrome storage to see if user has input the api token in before
   chrome.storage.sync.get("user_token", function (data) {
     var apiToken;
@@ -68,10 +70,10 @@ export function onAPIInputSubmit() {
           });
           //If 401, user did not enter valid api key, so remove it from storage and let them try again
           if (user.status === 401) {
-            if (document.getElementById("API-Input").value) {
-              alert("You did not enter a valid API key! Please try again");
-              chrome.storage.sync.remove("user_token");
-            }
+
+            alert("You did not enter a valid API key! Please try again");
+            chrome.storage.sync.remove("user_token");
+
             return [];
             //if 304, user data has not changed since last API access, so do not make any api calls
           } else if (user.status === 304) {
@@ -113,4 +115,15 @@ function setCount(res) {
   const div = document.createElement("div");
   div.textContent = `${res.count} kanji and you know ${res.known_count}`; // adds a div with this on it ${res.count}
   document.body.appendChild(div); // appends the new div above
+}
+
+
+//Handles the toggling for the page refresh function
+export function onRefreshToggle(e) {
+  chrome.storage.sync.get("page_refresh", function (storage_data) {
+    //Save the current state of the checkbox to storage
+    let enableRefresh = document.getElementById("Page-Refresh").checked
+    chrome.storage.sync.set({ page_refresh: enableRefresh })
+  })
+
 }

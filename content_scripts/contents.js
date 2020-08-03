@@ -1,10 +1,14 @@
-chrome.storage.sync.get("kanji", function (data_storage) {
+chrome.storage.sync.get(["kanji", "page_refresh"], function (storage_data) {
+
   //This function is automatically run once the page is loaded
   const pageLoaded = () => {
-    console.log("PAGE LOADED")
-    highlight_content(data_storage);
+    highlight_content(storage_data);
   };
-  window.addEventListener("load", pageLoaded, false);
+  //If the user has automatic page fresh enabled, call the highlight function on page refresh
+  if (storage_data.page_refresh) {
+    window.addEventListener("load", pageLoaded, false);
+  }
+
 
   //This is triggered on click of the kanify button
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -12,7 +16,7 @@ chrome.storage.sync.get("kanji", function (data_storage) {
     const matches = document.documentElement.innerHTML.match(re); //Contains the set of all kanjis read on the page
 
     //Calling the highlight function, pass in the storage data
-    let known_kanji_count = highlight_content(data_storage);
+    let known_kanji_count = highlight_content(storage_data);
     sendResponse({ count: matches.length, known_count: known_kanji_count });
   });
 });
