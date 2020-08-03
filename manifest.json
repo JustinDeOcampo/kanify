@@ -11,8 +11,8 @@
     {
       "matches": ["<all_urls>"],
       "js": [
-        "content_scripts/contents.js",
-        "content_scripts/mutation_observer.js"
+        "content_scripts/highlight_content.js",
+        "content_scripts/contents.js"
       ]
     }
   ],
