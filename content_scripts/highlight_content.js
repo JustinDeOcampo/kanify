@@ -1,10 +1,10 @@
 //You can call this function and pass in the current_url in order to highlight the kanjis on the page
-const highlight_content = (CURRENT_URL, data_storage) => {
+const highlight_content = (data_storage) => {
   known_kanji_count = 0;
   console.log(data_storage.kanji);
   let kanji_set = new Set(data_storage.kanji); //convert back to set
   let tag_list;
-  let isYoutube = ytVidId(CURRENT_URL);
+  let isYoutube = ytVidId();
 
   if (isYoutube) {
     tag_list = ["yt-formatted-string", "span"];
@@ -80,8 +80,7 @@ function highlight_character(tag, character, index, kanjis_replaced_counter) {
 }
 
 //Regex expression to check if on youtube
-function ytVidId(url) {
-  var p = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
-  return url.match(p) ? true : false;
+function ytVidId() {
+  return String(location.host) === "www.youtube.com" ? true : false;
   i;
 }
