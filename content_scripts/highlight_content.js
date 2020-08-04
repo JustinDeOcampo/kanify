@@ -71,7 +71,7 @@ function highlight_character(tag, character, index, kanjis_replaced_counter) {
   //Slicing the highlighted kanji into the text content
   let new_innerHTML =
     innerHTML.substring(0, updated_index) +
-    "<span class='highlight style' style = 'background-color:rgb(255,17,255)'>" +
+    "<span class='highlight' style = 'background-color:rgb(255,17,255)'>" +
     innerHTML.substring(updated_index, updated_index + 1) +
     "</span>" +
     innerHTML.substring(updated_index + 1);
@@ -82,5 +82,5 @@ function highlight_character(tag, character, index, kanjis_replaced_counter) {
 //Regex expression to check if on youtube
 function ytVidId() {
   return String(location.host) === "www.youtube.com" ? true : false;
-  i;
+
 }

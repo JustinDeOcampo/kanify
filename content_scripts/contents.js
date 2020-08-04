@@ -9,7 +9,6 @@ chrome.storage.sync.get(["kanji", "page_refresh"], function (storage_data) {
     window.addEventListener("load", pageLoaded, false);
   }
 
-
   //This is triggered on click of the kanify button
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     const re = new RegExp("[\u4e00-\u9faf]", "igm"); // regular expression
@@ -20,3 +19,12 @@ chrome.storage.sync.get(["kanji", "page_refresh"], function (storage_data) {
     sendResponse({ count: matches.length, known_count: known_kanji_count });
   });
 });
+
+/*
+TODO:
+- Style html
+- Add hotkey for triggering the highlight scripts
+- Automatic page loading bug --> add async function or something
+- Fix youtube bug
+- Fix kanji count on broken websites
+*/

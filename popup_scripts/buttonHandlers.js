@@ -114,9 +114,11 @@ export const onKanifyClick = () => {
 };
 
 function setCount(res) {
-  const div = document.createElement("div");
-  div.textContent = `${res.count} kanji and you know ${res.known_count}`; // adds a div with this on it ${res.count}
-  document.body.appendChild(div); // appends the new div above
+  if (res.known_count <= res.count) {
+    const div = document.createElement("div");
+    div.textContent = `You know ${res.known_count} / ${res.count} kanjis.  `; // adds a div with this on it ${res.count}
+    document.body.appendChild(div); // appends the new div above
+  }
 }
 
 
