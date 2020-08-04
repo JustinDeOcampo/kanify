@@ -4,12 +4,14 @@
   "version": "1.0",
   "manifest_version": 2,
   "background": {
-    "scripts": ["background.js"],
+    "page": "background_files/background.html",
     "persistent": false
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>"
+      ],
       "js": [
         "content_scripts/highlight_content.js",
         "content_scripts/contents.js"
@@ -21,7 +23,10 @@
     "default_title": "Kanify",
     "default_popup": "popup.html"
   },
-  "permissions": ["storage", "tabs"],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {

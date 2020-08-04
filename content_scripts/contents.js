@@ -4,7 +4,7 @@ chrome.storage.sync.get(["kanji", "page_refresh"], function (storage_data) {
   const pageLoaded = () => {
     highlight_content(storage_data);
   };
-  //If the user has automatic page fresh enabled, call the highlight function on page refresh
+  //If the user has automatic page refresh enabled, call the highlight function on page refresh
   if (storage_data.page_refresh) {
     window.addEventListener("load", pageLoaded, false);
   }

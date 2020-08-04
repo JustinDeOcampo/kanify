@@ -2,7 +2,6 @@
 import { apiInputRenderer, settingsInputRenderer } from './interface_renderer.js'
 import { onAPIInputSubmit, onKanifyClick, onRefreshToggle } from './buttonHandlers.js'
 
-
 /*Event listener which attaches this even handler once the DOM has loaded the content of a page */
 document.addEventListener(
   "DOMContentLoaded",
@@ -15,11 +14,6 @@ document.addEventListener(
       else {
         apiInputRenderer();
       }
-
-
-
-      //Periodically check if we need to make api calls every three hours
-      setInterval(onAPIInputSubmit, 1000 * 60 * 3);
 
       /*Handles submission of API-Key by user */
       if (document.getElementById("API-Submit")) {

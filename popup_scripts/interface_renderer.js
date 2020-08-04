@@ -32,9 +32,3 @@ export const apiInputRemover = () => {
     .removeChild(document.getElementById("API-Container"));
 };
 
-/*
-<label class="switch">
-    <input type="checkbox" id="Page-Refresh" >
-    <span class="slider round"></span>
-  </label>
-*/

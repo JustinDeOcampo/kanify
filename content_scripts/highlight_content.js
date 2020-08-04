@@ -61,7 +61,7 @@ const highlight_content = (data_storage) => {
 function highlight_character(tag, character, index, kanjis_replaced_counter) {
   //Saving the text content to a variable
   let innerHTML = tag.innerHTML;
-  // this is how many characters are in the "hightlight" span
+  // this is how many characters are in the "highlight" span
   const width_of_span = 31;
   //Grabbing correct index to slice at
   let updated_index = innerHTML.indexOf(
