@@ -32,3 +32,11 @@ export const apiInputRemover = () => {
     .removeChild(document.getElementById("API-Container"));
 };
 
+// This function clicks the kanify button, used for hotkey
+// I think this is useless, But when I delete it the hotkey breaks...
+export const kanifyClicker = () => {
+  //alert("clicking button")
+  document.getElementsByTagName("button").click()
+};
+
+
