@@ -34,6 +34,13 @@
         "mac": "MacCtrl+Shift+F"
       },
       "description": "Opens hello.html"
+    },
+    "kanify_me":{
+      "suggested_key":{
+        "default": "Ctrl+Shift+K",
+        "mac":"MacCtrl+Shift+K"
+      },
+      "description":"Excecutes the highlight event"
     }
   }
 }

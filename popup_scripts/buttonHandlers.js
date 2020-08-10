@@ -3,6 +3,7 @@ import {
   apiInputRenderer,
   settingsInputRenderer,
   apiInputRemover,
+  kanifyClicker
 } from "./interface_renderer.js";
 
 /*On submit button, authorize users API key */
@@ -120,7 +121,7 @@ export const onKanifyClick = () => {
 function setCount(res) {
   if (res.known_count <= res.count) {
     const div = document.createElement("div");
-    div.textContent = `You know ${res.known_count} / ${res.count} kanjis.  `; // adds a div with this on it ${res.count}
+    div.textContent = `You know ${res.known_count} / ${res.count} kanjis. 東京都 `; // adds a div with this on it ${res.count}
     document.body.appendChild(div); // appends the new div above
   }
 }
