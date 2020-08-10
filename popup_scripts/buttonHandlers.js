@@ -80,6 +80,10 @@ export function onAPIInputSubmit() {
             console.log("Made 0 API calls!");
             return [];
           }
+          else if (user.status === 429) {
+            console.log("You made too many requests!")
+            return [];
+          }
           //else, retrieve the user's information from the api
           else {
             alert("Successful! You are now ready to use Kanify");
