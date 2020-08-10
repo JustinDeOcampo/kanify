@@ -15,7 +15,7 @@ export function onAPIInputSubmit() {
     //if user has not put in the api token, add it to the storage
     if (!data["user_token"]) {
       //SAVE USERS DEFAULT SETTINGS TO CHROME STORAGE HERE
-      chrome.storage.sync.set({ page_refresh: false })
+      chrome.storage.sync.set({ page_refresh: false, first_login: true })
       //Save api token
       apiToken = document.getElementById("API-Input").value;
       chrome.storage.sync.set({ user_token: apiToken });
@@ -30,7 +30,7 @@ export function onAPIInputSubmit() {
     }
 
     ///////////////////////////////////////////////////////////////////
-    chrome.storage.sync.get(["last_modified_user"], function (data) {
+    chrome.storage.sync.get(["last_modified_user", "first_login"], function (data) {
       var appendable_user;
       //if last modified date exists in storage, append it to the request header
       if (data.last_modified_user) {
@@ -78,7 +78,9 @@ export function onAPIInputSubmit() {
             return [];
             //if 304, user data has not changed since last API access, so do not make any api calls
           } else if (user.status === 304) {
+            chrome.storage.sync.set({ first_login: false })
             console.log("Made 0 API calls!");
+
             return [];
           }
           else if (user.status === 429) {
@@ -87,7 +89,12 @@ export function onAPIInputSubmit() {
           }
           //else, retrieve the user's information from the api
           else {
-            alert("Successful! You are now ready to use Kanify");
+            //Alert the user with a success if it is the first time they open kanify
+            if (data.first_login == true) {
+              alert("Successful! You are now ready to use Kanify");
+            }
+
+
             //destructuring promises and jsonify the body of data
             const user_data = await user.json();
             const subject_data_1 = await subject_1.json();
