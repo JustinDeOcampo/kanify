@@ -6,8 +6,9 @@
   <style>
     body {
       font-size: 14px;
-      min-height: 150px;
-      min-width: 300px;
+      min-height: 100px;
+      min-width: 250px;
+
     }
 
     input[type="text"] {
@@ -28,10 +29,7 @@
       align-items: center;
     }
 
-    .Kanify {
-      width: 90px;
-      margin: 10px;
-    }
+
 
     .label {
       margin-bottom: 5px;
@@ -103,6 +101,33 @@
     .root {
       display: flex;
       flex-direction: column;
+    }
+
+    .Kanify {
+      box-shadow: inset 0px 1px 0px 0px #ffffff;
+      background: linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+      background-color: #f9f9f9;
+      border-radius: 6px;
+      border: 1px solid #dcdcdc;
+      display: inline-block;
+      cursor: pointer;
+      color: black;
+      font-family: Arial;
+      font-size: 15px;
+      padding: 6px 24px;
+      text-decoration: none;
+      text-shadow: 0px 1px 0px #ffffff;
+      margin: 10px
+    }
+
+    .Kanify:hover {
+      background: linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+      background-color: #e9e9e9;
+    }
+
+    .Kanify:active {
+      position: relative;
+      top: 1px;
     }
   </style>
 </head>
