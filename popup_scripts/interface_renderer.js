@@ -2,7 +2,8 @@
 export const apiInputRenderer = () => {
   const div = document.getElementById("Input-Container");
   div.innerHTML = `
-    <label for="API-Input">Wani Kani v2 API Key</label><br />
+    <label class="control">Highlight kanji up to your WaniKani Level!</label>
+    <label for="API-Input">Insert your V2 API token</label><br />
       <input
         id="API-Input"
         type="text"
@@ -16,12 +17,14 @@ export const apiInputRenderer = () => {
 export const settingsInputRenderer = () => {
   const div = document.getElementById("Input-Container");
   div.innerHTML = `
+  <label class="control">PC: Ctrl + Shift + E</label>
+  <label class="control">Mac: Cmd + Shift + E</label>
   <button class = "Kanify" id="Kanify">Kanify Me!</button>
-  <label class = "label">Enable kanify on page load</label>
   <label class="switch">
     <input type="checkbox" id="Page-Refresh" >
     <span class="slider round"></span>
   </label>
+  <label class="label" for="Page-Refresh">Enable kanify on page load</label>
   `;
 };
 

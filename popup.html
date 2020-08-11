@@ -27,12 +27,15 @@
       margin-bottom: 2.5%;
       flex-direction: column;
       align-items: center;
+      border-top: 3px solid pink;
     }
 
 
 
     .label {
-      margin-bottom: 5px;
+      color: grey;
+      font-size: 12px;
+      margin-top: 5px;
     }
 
     /* The switch - the box around the slider */
@@ -76,11 +79,11 @@
     }
 
     input:checked+.slider {
-      background-color: #2196F3;
+      background-color: pink;
     }
 
     input:focus+.slider {
-      box-shadow: 0 0 1px #2196F3;
+      box-shadow: 0 0 1px pink;
     }
 
     input:checked+.slider:before {
@@ -129,15 +132,27 @@
       position: relative;
       top: 1px;
     }
+
+    .control {
+      color: grey;
+    }
+
+    .Version-Container {
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
   <div id="root" class="root">
-    <h1>Kanify (v1.0.0)</h1>
+    <h1>Kanify</h1>
     <div class="Input-Container" id="Input-Container">
 
     </div>
+    <div class="Version-Container">
+      <label class="label">V 1.0.0</label>
+    </div>
+
     <script type="module" src="./popup_scripts/popup.js" charset="utf-8"></script>
   </div>
 </body>
