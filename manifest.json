@@ -35,12 +35,12 @@
       },
       "description": "Opens hello.html"
     },
-    "kanify_me":{
-      "suggested_key":{
-        "default": "Ctrl+Shift+K",
-        "mac":"MacCtrl+Shift+K"
+    "kanify_me": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
       },
-      "description":"Excecutes the highlight event"
+      "description": "Excecutes the highlight event"
     }
   }
 }
