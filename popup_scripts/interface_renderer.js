@@ -7,9 +7,9 @@ export const apiInputRenderer = () => {
       <input
         id="API-Input"
         type="text"
-        placeholder="Please paste Wani Kani v2 API Key here"
+        placeholder=""
       /><br />
-      <button id="API-Submit" type="button">Insert API key</button>
+      <button id="API-Submit" type="button">Submit</button>
     `;
 };
 
@@ -17,7 +17,7 @@ export const apiInputRenderer = () => {
 export const settingsInputRenderer = () => {
   const div = document.getElementById("Input-Container");
   div.innerHTML = `
-  <label class="control">PC: Ctrl + Shift + E</label>
+  <label style = "margin-top:5px;" class="control">PC: Ctrl + Shift + E</label>
   <label class="control">Mac: Cmd + Shift + E</label>
   <button class = "Kanify" id="Kanify">Kanify Me!</button>
   <label class="switch">
