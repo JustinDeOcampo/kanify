@@ -22,11 +22,10 @@ chrome.storage.sync.get(["kanji", "page_refresh"], function (storage_data) {
 
 /*
 TODO:
+- Stop kanjij_count from printing multiple times
 - Style html
-- Add hotkey for triggering the highlight scripts
 - Automatic page loading bug --> add async function or something
 - Fix youtube bug
-- Fix kanji count on broken websites
 - Add link to WaniKani page for highlighted kanjis
 - Add '?' icon for how to find personal access token
 - Fix adding new div's for kanji count
