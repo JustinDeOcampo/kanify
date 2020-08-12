@@ -2,14 +2,17 @@
 export const apiInputRenderer = () => {
   const div = document.getElementById("Input-Container");
   div.innerHTML = `
-    <label class="control">Highlight kanji up to your WaniKani Level!</label>
-    <label for="API-Input">Insert your V2 API token</label><br />
+    <div class="Info-Box">
+    <label class="Info-Light">Highlight kanji up to your WaniKani Level!</label>
+    </div>
+    
+    <label class="Info-Dark" for="API-Input">Insert Personal Access Token</label><br />
       <input
         id="API-Input"
         type="text"
         placeholder=""
       /><br />
-      <button id="API-Submit" type="button">Submit</button>
+      <button class="Submit-Button" id="API-Submit" type="button">Submit</button>
     `;
 };
 
