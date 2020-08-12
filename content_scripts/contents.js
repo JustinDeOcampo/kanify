@@ -27,4 +27,8 @@ TODO:
 - Automatic page loading bug --> add async function or something
 - Fix youtube bug
 - Fix kanji count on broken websites
+- Add link to WaniKani page for highlighted kanjis
+- Add '?' icon for how to find personal access token
+- Fix adding new div's for kanji count
+- Remove Alerts
 */
