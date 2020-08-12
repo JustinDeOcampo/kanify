@@ -6,9 +6,10 @@ export const apiInputRenderer = () => {
     <label class="Info-Light">Highlight kanji up to your WaniKani Level!</label>
     </div>
     
-    <label class="Info-Dark" for="API-Input">Insert Personal Access Token</label><br />
+    <label class="Info-Dark" for="API-Input">Insert Personal Access Token</label>
+    <label class="Info-Small" for="API-Input">(Settings -> API Tokens)</label>
+    <br />
       <input 
-        
         id="API-Input"
         type="text"
         placeholder=""
