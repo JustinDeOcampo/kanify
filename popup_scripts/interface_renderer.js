@@ -7,7 +7,8 @@ export const apiInputRenderer = () => {
     </div>
     
     <label class="Info-Dark" for="API-Input">Insert Personal Access Token</label><br />
-      <input
+      <input 
+        
         id="API-Input"
         type="text"
         placeholder=""
@@ -20,8 +21,10 @@ export const apiInputRenderer = () => {
 export const settingsInputRenderer = () => {
   const div = document.getElementById("Input-Container");
   div.innerHTML = `
-  <label style = "margin-top:5px;" class="control">PC: Ctrl + Shift + E</label>
-  <label class="control">Mac: Cmd + Shift + E</label>
+  <div class="Info-Box">
+    <label style = "margin-top:5px;" class="Info-Light">PC: Ctrl + Shift + E</label><br />
+    <label class="Info-Light">Mac: Cmd + Shift + E</label>
+  </div>
   <button class = "Kanify" id="Kanify">Kanify Me!</button>
   <label class="switch">
     <input type="checkbox" id="Page-Refresh" >

@@ -31,7 +31,7 @@
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+F",
-        "mac": "MacCtrl+Shift+F"
+        "mac": "Command+Shift+F"
       },
       "description": "Opens hello.html"
     },

@@ -125,11 +125,13 @@ export const onKanifyClick = () => {
   });
 };
 
+//append kanji count
 function setCount(res) {
   if (res.known_count <= res.count) {
     const div = document.createElement("div");
-    div.textContent = `You know ${res.known_count} / ${res.count} kanjis. 東京都 `; // adds a div with this on it ${res.count}
-    document.body.appendChild(div); // appends the new div above
+    div.textContent = `You know ${res.known_count} / ${res.count} kanjis.`; // adds a div with this on it ${res.count}
+    var currentDiv = document.getElementById("Version-Container");
+    document.body.insertBefore(div, currentDiv); // appends the new div above
   }
 }
 
