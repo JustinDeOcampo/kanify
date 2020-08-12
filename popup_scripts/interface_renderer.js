@@ -2,12 +2,12 @@
 export const apiInputRenderer = () => {
   const div = document.getElementById("Input-Container");
   div.innerHTML = `
-    <div class="Info-Box">
+    <div id = "Info-Box" class="Info-Box">
     <label class="Info-Light">Highlight kanji up to your WaniKani Level!</label>
     </div>
     
     <label class="Info-Dark" for="API-Input">Insert Personal Access Token</label>
-    <label class="Info-Small" for="API-Input">(Settings -> API Tokens)</label>
+    <label class="Info-Small" for="API-Input">(Settings -> API Tokens -> Generate New Token)</label>
     <br />
       <input 
         id="API-Input"
