@@ -23,7 +23,7 @@ chrome.storage.sync.get(["kanji", "page_refresh"], function (storage_data) {
 /*
 TODO:
 - Stop kanjij_count from printing multiple times
-- Style html
+- Style html: change font
 - Automatic page loading bug --> add async function or something
 - Fix youtube bug
 - Add link to WaniKani page for highlighted kanjis

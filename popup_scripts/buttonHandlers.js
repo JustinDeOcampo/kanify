@@ -131,7 +131,7 @@ function setCount(res) {
     var newDiv = document.createElement("div");
     //var newText = document.createTextNode(`You know ${res.known_count} / ${res.count} kanjis.`);
     newDiv.textContent = `You know ${res.known_count} / ${res.count} kanjis.`; // adds a div with this on it ${res.count}
-    newDiv.style = 'margin-top: .3em; text-align: center;';
+    newDiv.style = 'margin-top: .3em; text-align: center; font-family: \'Varela Round\', sans-serif;';
     //newDiv.appendChild(newText);
     var currentDiv = document.getElementById("Version-Container");
     
