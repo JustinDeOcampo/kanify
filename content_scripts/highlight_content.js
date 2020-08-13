@@ -1,5 +1,6 @@
 //You can call this function and pass in the current_url in order to highlight the kanjis on the page
 const highlight_content = (data_storage) => {
+
   known_kanji_count = 0;
   console.log(data_storage.kanji);
   let kanji_set = new Set(data_storage.kanji); //convert back to set
@@ -7,7 +8,8 @@ const highlight_content = (data_storage) => {
   let isYoutube = ytVidId();
 
   if (isYoutube) {
-    tag_list = ["yt-formatted-string", "span"];
+    tag_list = ["span", "a"]
+    //"yt-formatted-string",
   } else {
     tag_list = [
       "span",
@@ -62,7 +64,7 @@ function highlight_character(tag, character, index, kanjis_replaced_counter) {
   //Saving the text content to a variable
   let innerHTML = tag.innerHTML;
   // this is how many characters are in the "highlight" span
-  const width_of_span = 31;
+  const width_of_span = 77;
   //Grabbing correct index to slice at
   let updated_index = innerHTML.indexOf(
     character,
@@ -71,7 +73,7 @@ function highlight_character(tag, character, index, kanjis_replaced_counter) {
   //Slicing the highlighted kanji into the text content
   let new_innerHTML =
     innerHTML.substring(0, updated_index) +
-    "<span class='highlight' style = 'background-color:rgb(255,105,255,0.9)'>" +
+    "<span class='highlight' style='background-color:rgb(255,105,255,0.9)'>" +
     innerHTML.substring(updated_index, updated_index + 1) +
     "</span>" +
     innerHTML.substring(updated_index + 1);
