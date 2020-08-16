@@ -2,13 +2,12 @@
 const highlight_content = (data_storage) => {
 
   known_kanji_count = 0;
-  console.log(data_storage.kanji);
   let kanji_set = new Set(data_storage.kanji); //convert back to set
   let tag_list;
   let isYoutube = ytVidId();
 
   if (isYoutube) {
-    tag_list = ["span", "a"]
+    //tag_list = ["yt-formatted-string", "span", "a"]
     //"yt-formatted-string",
   } else {
     tag_list = [
