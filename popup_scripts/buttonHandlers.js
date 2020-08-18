@@ -72,13 +72,16 @@ export function onAPIInputSubmit() {
             last_modified_subject_2: subject_2.headers.get("last-modified"),
           });
           //If 401, user did not enter valid api key, so remove it from storage and let them try again
-          if (user.status === 401) {
-            var newDiv = document.createElement("div");
-            newDiv.textContent = "You did not enter a valid API key! Please try again"; // adds a div with this on it ${res.count}
-            newDiv.style = 'margin-top: .3em; text-align: center; font-family: \'Varela Round\', sans-serif;';
-            var currentDiv = document.getElementById("Version-Container");
-            currentDiv.parentNode.insertBefore(newDiv, currentDiv);
-            chrome.storage.sync.remove("user_token");
+          if(user.status === 401) {
+            if(!document.getElementById("Invalid-Box")){
+              var newDiv = document.createElement("div");
+              newDiv.id = 'Invalid-Box'
+              newDiv.textContent = "You did not enter a valid API key! Please try again"; // adds a div with this on it ${res.count}
+              newDiv.style = 'margin-top: .3em; text-align: center; font-family: \'Varela Round\', sans-serif;';
+              var currentDiv = document.getElementById("Version-Container");
+              currentDiv.parentNode.insertBefore(newDiv, currentDiv);
+              chrome.storage.sync.remove("user_token");
+            }
             return [];
             //if 304, user data has not changed since last API access, so do not make any api calls
           } else if (user.status === 304) {
@@ -95,14 +98,19 @@ export function onAPIInputSubmit() {
           else {
             //Alert the user with a success if it is the first time they open kanify
             if (data.first_login == true) {
-              
+              if(document.getElementById("Invalid-Box")){
+                var element = document.getElementById("Invalid-Box")
+                element.parentNode.removeChild(element)
+              }
               
               var newDiv = document.createElement("div");
+              
               newDiv.textContent = "Successful! You are now ready to use Kanify. Please refresh the page to begin using"; // adds a div with this on it ${res.count}
-              newDiv.style = 'margin-top: .3em; text-align: center; font-family: \'Varela Round\', sans-serif;';
-              var currentDiv = document.getElementById("Info-Box");
+              newDiv.style = 'margin-top: .3em; margin-left: 1em; margin-right: 1em; text-align: center; font-family: \'Varela Round\', sans-serif; font-size: 1.2em';
+              //var currentDiv = document.getElementById("Info-Box");
+              var currentDiv = document.getElementById("Version-Container");
               currentDiv.parentNode.insertBefore(newDiv, currentDiv); 
-              alert("Successful! You are now ready to use Kanify. Please refresh the page to begin using");
+              //alert("Successful! You are now ready to use Kanify. Please refresh the page to begin using");
               
             }
 
@@ -118,12 +126,13 @@ export function onAPIInputSubmit() {
         .then(apifunction) //call api function to save data to storage*/
         .then((status_code) => {
           //if the user correctly put their api key in, render the correct html in the popup for usage
+          /*
           if (status_code === 200) {
             settingsInputRenderer();
             if (document.getElementById('API-Input')) {
               apiInputRemover();
             }
-          }
+          }*/
         });
     });
   });
@@ -133,22 +142,9 @@ export function onAPIInputSubmit() {
 export const onKanifyClick = () => {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     //sends the content of the current tab to the content script
-    chrome.tabs.sendMessage(tabs[0].id, tabs[0].url, setCount);
+    chrome.tabs.sendMessage(tabs[0].id, tabs[0].url);
   });
 };
-
-//append kanji count
-function setCount(res) {
-  if (res.known_count <= res.count) {
-    var newDiv = document.createElement("div");
-    newDiv.textContent = `You know ${res.known_count} / ${res.count} kanjis.`; // adds a div with this on it ${res.count}
-    newDiv.style = 'margin-top: .3em; text-align: center; font-family: \'Varela Round\', sans-serif;';
-    var currentDiv = document.getElementById("Version-Container");
-    currentDiv.parentNode.insertBefore(newDiv, currentDiv); 
-    
-  }
-}
-
 
 //Handles the toggling for the page refresh function
 export function onRefreshToggle(e) {

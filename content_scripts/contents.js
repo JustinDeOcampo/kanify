@@ -11,12 +11,15 @@ chrome.storage.sync.get(["kanji", "page_refresh"], function (storage_data) {
 
   //This is triggered on click of the kanify button
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    const re = new RegExp("[\u4e00-\u9faf]", "igm"); // regular expression
-    const matches = document.documentElement.innerHTML.match(re); //Contains the set of all kanjis read on the page
+
+    //Removing RegEx because Kanji counter broken
+    //const re = new RegExp("[\u4e00-\u9faf]", "igm"); // regular expression
+    //const matches = document.documentElement.innerHTML.match(re); //Contains the set of all kanjis read on the page
 
     //Calling the highlight function, pass in the storage data
-    let known_kanji_count = highlight_content(storage_data);
-    sendResponse({ count: matches.length, known_count: known_kanji_count });
+    //let known_kanji_count = highlight_content(storage_data);
+    highlight_content(storage_data);
+    sendResponse({ count: 0, known_count: 0 });
   });
 });
 

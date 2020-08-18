@@ -7,7 +7,7 @@ export const apiInputRenderer = () => {
     </div>
     
     <label class="Info-Dark" for="API-Input">Insert Personal Access Token</label>
-    <label class="Info-Small" for="API-Input">(Settings -> API Tokens -> Generate New Token)</label>
+    <label class="Info-Small" for="API-Input">(Wanikani.com -> Settings -> API Tokens -> Generate New Token)</label>
     <br />
       <input 
         id="API-Input"
