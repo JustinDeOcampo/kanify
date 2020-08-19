@@ -1,7 +1,7 @@
 /*This function manipulates the API data once it is called */
 
 function apifunction(responseBody) {
-  console.log(responseBody);
+  //console.log(responseBody);
 
   //bool that keeps track of whether or not we need to record new data from the API
   var hasModified;
@@ -22,9 +22,9 @@ function apifunction(responseBody) {
     //if user level is in storage, just grab that value
     else {
       CURRENT_USER_LEVEL = storage_data.current_user_level;
-      console.log(
-        "Current user level loaded from storage: " + CURRENT_USER_LEVEL
-      );
+      //console.log(
+      //  "Current user level loaded from storage: " + CURRENT_USER_LEVEL
+      //);
       hasModified = false;
     }
   });
@@ -47,8 +47,8 @@ function apifunction(responseBody) {
       chrome.storage.sync.set({ kanji: [...kanji_set] }); //spread operator takes every variable and places it there
     } else {
       kanji_set = new Set(data.kanji);
-      console.log("Kanji loaded from storage:");
-      console.log(kanji_set);
+      //console.log("Kanji loaded from storage:");
+      //console.log(kanji_set);
     }
   });
   //returning the status code of the api call for future use
@@ -63,7 +63,7 @@ const createRequest = (endpointpath, apiToken, last_modified_date) => {
   //if last modified date exists, append it to the header, so we can keep track of when we last accessed the api
   if (last_modified_date !== null) {
     requestHeaders.append("If-Modified-Since", last_modified_date);
-    console.log("Last date api was modified: " + last_modified_date);
+    //console.log("Last date api was modified: " + last_modified_date);
   }
   /*Creating Request object with parameters*/
   var request = new Request("https://api.wanikani.com/v2/" + endpointpath, {

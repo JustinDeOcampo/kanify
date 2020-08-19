@@ -19,14 +19,14 @@ export function onAPIInputSubmit() {
       //Save api token
       apiToken = document.getElementById("API-Input").value;
       chrome.storage.sync.set({ user_token: apiToken });
-      console.log("We just saved your token: " + apiToken);
+      //console.log("We just saved your token: " + apiToken);
     }
     //if user has already put in api token, just use what is in storage
     else {
       apiToken = data.user_token;
-      console.log(
+      /*console.log(
         "Your token has been loaded from storage: " + String(data.user_token)
-      );
+      );*/
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -72,8 +72,8 @@ export function onAPIInputSubmit() {
             last_modified_subject_2: subject_2.headers.get("last-modified"),
           });
           //If 401, user did not enter valid api key, so remove it from storage and let them try again
-          if(user.status === 401) {
-            if(!document.getElementById("Invalid-Box")){
+          if (user.status === 401) {
+            if (!document.getElementById("Invalid-Box")) {
               var newDiv = document.createElement("div");
               newDiv.id = 'Invalid-Box'
               newDiv.textContent = "You did not enter a valid API key! Please try again"; // adds a div with this on it ${res.count}
@@ -86,32 +86,32 @@ export function onAPIInputSubmit() {
             //if 304, user data has not changed since last API access, so do not make any api calls
           } else if (user.status === 304) {
             chrome.storage.sync.set({ first_login: false })
-            console.log("Made 0 API calls!");
+            //console.log("Made 0 API calls!");
 
             return [];
           }
           else if (user.status === 429) {
-            console.log("You made too many requests!")
+            //console.log("You made too many requests!")
             return [];
           }
           //else, retrieve the user's information from the api
           else {
             //Alert the user with a success if it is the first time they open kanify
             if (data.first_login == true) {
-              if(document.getElementById("Invalid-Box")){
+              if (document.getElementById("Invalid-Box")) {
                 var element = document.getElementById("Invalid-Box")
                 element.parentNode.removeChild(element)
               }
-              
+
               var newDiv = document.createElement("div");
-              
+
               newDiv.textContent = "Successful! You are now ready to use Kanify. Please refresh the page to begin using"; // adds a div with this on it ${res.count}
               newDiv.style = 'margin-top: .3em; margin-left: 1em; margin-right: 1em; text-align: center; font-family: \'Varela Round\', sans-serif; font-size: 1.2em';
               //var currentDiv = document.getElementById("Info-Box");
               var currentDiv = document.getElementById("Version-Container");
-              currentDiv.parentNode.insertBefore(newDiv, currentDiv); 
+              currentDiv.parentNode.insertBefore(newDiv, currentDiv);
               //alert("Successful! You are now ready to use Kanify. Please refresh the page to begin using");
-              
+
             }
 
 
