@@ -11,7 +11,7 @@ function apifunction(responseBody) {
   chrome.storage.sync.get("current_user_level", function (storage_data) {
     //if user level is not in storage or if the level in storage doesnt match up with the current API data, update storage
     if (
-      responseBody.length === 3 &&
+      responseBody.length === 4 &&
       (!storage_data["current_user_level"] ||
         storage_data["current_user_level"] != responseBody[2].data.level)
     ) {
@@ -34,6 +34,7 @@ function apifunction(responseBody) {
     if (!data.kanji || hasModified) {
       let i = 0;
       while (i < 1000) {
+        //if the level of the kanji is less than or equal to the user's level, add it to the set
         if (responseBody[0].data[i].data.level <= CURRENT_USER_LEVEL) {
           kanji_set.add(responseBody[0].data[i].data.characters);
         }
@@ -50,7 +51,8 @@ function apifunction(responseBody) {
       console.log(kanji_set);
     }
   });
-  window.close();
+  //returning the status code of the api call for future use
+  return responseBody[3];
 }
 
 const createRequest = (endpointpath, apiToken, last_modified_date) => {
