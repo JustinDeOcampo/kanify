@@ -8,7 +8,6 @@ Since there are more than 2,000 kanji characters a Japanese learner needs to lea
 This project is currently on version 1.0.0. Updates will be pushed to the chrome store as needed.
 
 ## DEMO
-![Kanify 1](https://i.imgur.com/NSalTd5.jpg)
 
 ![Kanify 2](https://i.imgur.com/66NEKI0.jpg)
 
