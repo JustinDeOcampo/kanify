@@ -1,5 +1,7 @@
 # Kanify
 
+LINK TO EXTENSION: https://chrome.google.com/webstore/detail/kanify/gibmifddoamhnlgbaofkpjaicpkkkdbd?hl=en&authuser=2
+
 This Google chrome extension highlights the kanji on a web-page up to the users current Wani Kani level.
 
 Since there are more than 2,000 kanji characters a Japanese learner needs to learn to be deemed literate, we designed that a tool that helps users see how much progress they're making when it comes to reading kanjis. Through [WaniKani](http://wanikani.com), one of the most popular online Kanji learning platforms, users increase their kanji vocabulary through daily practice. Kanify enables Japanese learners to highlight the kanji they know in WaniKani up to their current level on any given web page. 
