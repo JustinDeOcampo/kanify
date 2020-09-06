@@ -1,238 +1,242 @@
 <!DOCTYPE html>
 <html>
-  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
-  <head>
-    <title>Kanify</title>
-    
-  </head>
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 
-  <body>
-    <div id="root" class="root">
-      <div class="Title-Box">
-        <h1 clas="Title-Font">Kanify</h1>
-      </div>
-      
-      <div class="Input-Container" id="Input-Container">
+<head>
+  <title>Kanify</title>
 
-      </div>
-      <div id="VC-Container">
-        <div class="Version-Container" id="Version-Container">
-          <label class="Info-Light">V 1.0.0</label>
-        </div>
-      </div>
-      <script type="module" src="./popup_scripts/popup.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <div id="root" class="root">
+    <div class="Title-Box">
+      <h1 clas="Title-Font">Kanify</h1>
     </div>
-  </body>
-  <style>
 
-    body {
-      font-size: 14px;
-      min-height: 100px;
-      min-width: 250px;
-      background: #F9F9F9;
-    }
+    <div class="Input-Container" id="Input-Container">
 
-    .Title-Box{
-      margin: none;
-      border-bottom: 3px solid #FF69FF;
-      font-family: 'Varela Round', sans-serif;
-      font-size: 18px;
-    }
-    .Title-Font {
-    
-      margin-trim: 1em;
-    }
+    </div>
+    <div id="VC-Container">
+      <div class="Version-Container" id="Version-Container">
+        <label class="Info-Light">V 1.2</label>
+      </div>
+    </div>
+    <script type="module" src="./popup_scripts/popup.js" charset="utf-8"></script>
+  </div>
+</body>
+<style>
+  body {
+    font-size: 14px;
+    min-height: 100px;
+    min-width: 250px;
+    background: #F9F9F9;
+  }
 
-    .Info-Box {
-      text-align: center;
-      margin-top: 1.2em;
-      margin-left: 1.2em;
-      margin-right: 1.2em;
-      margin-bottom: 1.2em;
-      font-family: 'Varela Round', sans-serif;
-    }
+  .Title-Box {
+    margin: none;
+    border-bottom: 3px solid #FF69FF;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 18px;
+  }
 
-    input[type="text"] {
-      width: 250px;
-      border-radius: 34px;
-      background-color:#C4C4C4;
-      border:none;
-      height: 1.5em;
-      font-family: 'Varela Round', sans-serif;
-    }
-    
-    #API-Input:focus{
-      box-shadow: none;
-      outline: none;
-      background-color: #D6D6D6;
-    }
+  .Title-Font {
 
-    .Submit-Button {
-      border-radius: 34px;
-      padding: 7px 16px;
-      cursor: pointer;
-      background-color:#FF69FF;
-      border: none;
-      margin-bottom: 1em;
-      font-family: 'Varela Round', sans-serif;
-    }
-    .Submit-Button:focus {
-      outline: none;
-      box-shadow: none;
-      font-family: 'Varela Round', sans-serif;
-    }
-    .Submit-Button:hover {
-      background-color:#FF00FF
-    }
+    margin-trim: 1em;
+  }
 
-    h1 {
-      text-align: center;
-    }
+  .Info-Box {
+    text-align: center;
+    margin-top: 1.2em;
+    margin-left: 1.2em;
+    margin-right: 1.2em;
+    margin-bottom: 1.2em;
+    font-family: 'Varela Round', sans-serif;
+  }
 
-    .Input-Container {
-      display: flex;
-      flex: 1;
-      margin-bottom: 2.5%;
-      flex-direction: column;
-      align-items: center;
-      margin-left:1em;
-      margin-right:1em;
-      text-align: center;
-      font-family: 'Varela Round', sans-serif;
-    }
+  input[type="text"] {
+    width: 250px;
+    border-radius: 34px;
+    background-color: #C4C4C4;
+    border: none;
+    height: 1.5em;
+    font-family: 'Varela Round', sans-serif;
+  }
 
-    .label {
-      color: grey;
-      font-size: 12px;
-      margin-top: 5px;
-      font-family: 'Varela Round', sans-serif;
-    }
+  #API-Input:focus {
+    box-shadow: none;
+    outline: none;
+    background-color: #D6D6D6;
+  }
 
-    /* The switch - the box around the slider */
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 25px;
-    }
+  .Submit-Button {
+    border-radius: 34px;
+    padding: 7px 16px;
+    cursor: pointer;
+    background-color: #FF69FF;
+    border: none;
+    margin-bottom: 1em;
+    font-family: 'Varela Round', sans-serif;
+  }
 
-    /* Hide default HTML checkbox */
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+  .Submit-Button:focus {
+    outline: none;
+    box-shadow: none;
+    font-family: 'Varela Round', sans-serif;
+  }
 
-    /* The slider */
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
+  .Submit-Button:hover {
+    background-color: #FF00FF
+  }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 17px;
-      width: 17px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
+  h1 {
+    text-align: center;
+  }
 
-    input:checked+.slider {
-      background-color: #FF69FF;
-    }
+  .Input-Container {
+    display: flex;
+    flex: 1;
+    margin-bottom: 2.5%;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1em;
+    margin-right: 1em;
+    text-align: center;
+    font-family: 'Varela Round', sans-serif;
+  }
 
-    input:focus+.slider {
-      box-shadow: 0 0 1px #FF69FF;
-    }
+  .label {
+    color: grey;
+    font-size: 12px;
+    margin-top: 5px;
+    font-family: 'Varela Round', sans-serif;
+  }
 
-    input:checked+.slider:before {
-      -webkit-transform: translateX(35px);
-      -ms-transform: translateX(35px);
-      transform: translateX(35px);
-    }
+  /* The switch - the box around the slider */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 25px;
+  }
 
-    /* Rounded sliders */
-    .slider.round {
-      border-radius: 34px;
-    }
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
 
-    .slider.round:before {
-      border-radius: 50%;
-    }
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
 
-    .root {
-      display: flex;
-      flex-direction: column;
-    }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 17px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
 
-    .Kanify {
-      border-radius: 34px;
-      border: none;
-      display: inline-block;
-      cursor: pointer;
-      color: black;
-      background-color:#FF69FF;
-      font-size: 15px;
-      padding: 7px 16px;
-      text-decoration: none;
-      margin: 10px;
-      margin-bottom:1em;
-      font-family: 'Varela Round', sans-serif;
-    }
+  input:checked+.slider {
+    background-color: #FF69FF;
+  }
 
-    .Kanify:focus {
-      outline: none;
-      box-shadow: none;
-    }
+  input:focus+.slider {
+    box-shadow: 0 0 1px #FF69FF;
+  }
 
-    .Kanify:hover {
-      background-color: #FF00FF;
-    }
+  input:checked+.slider:before {
+    -webkit-transform: translateX(35px);
+    -ms-transform: translateX(35px);
+    transform: translateX(35px);
+  }
 
-    .Kanify:active {
-      position: relative;
-      top: 1px;
-    }
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
 
-    .Version-Container {
-      text-align: center;
-      margin-top: 1.2em;
-      font-family: 'Varela Round', sans-serif;
-    }
+  .slider.round:before {
+    border-radius: 50%;
+  }
 
-    .Version-Text {
-      color: black;
-      font-family: 'Varela Round', sans-serif;
-      font-size: 12;
-    }
+  .root {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .Info-Light {
-      color:#565656;
-      font-family: 'Varela Round', sans-serif;
-    }
+  .Kanify {
+    border-radius: 34px;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    color: black;
+    background-color: #FF69FF;
+    font-size: 15px;
+    padding: 7px 16px;
+    text-decoration: none;
+    margin: 10px;
+    margin-bottom: 1em;
+    font-family: 'Varela Round', sans-serif;
+  }
 
-    .Info-Dark {
-      color: black;
-      font-size: 1.3em;
-      font-family: 'Varela Round', sans-serif;
-    }
+  .Kanify:focus {
+    outline: none;
+    box-shadow: none;
+  }
 
-    .Info-Small {
-      color:#565656;
-      font-family: 'Varela Round', sans-serif;
-      font-size: 0.78em;
-      margin-top: 0px;
-    }
-  </style>
+  .Kanify:hover {
+    background-color: #FF00FF;
+  }
+
+  .Kanify:active {
+    position: relative;
+    top: 1px;
+  }
+
+  .Version-Container {
+    text-align: center;
+    margin-top: 1.2em;
+    font-family: 'Varela Round', sans-serif;
+  }
+
+  .Version-Text {
+    color: black;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 12;
+  }
+
+  .Info-Light {
+    color: #565656;
+    font-family: 'Varela Round', sans-serif;
+  }
+
+  .Info-Dark {
+    color: black;
+    font-size: 1.3em;
+    font-family: 'Varela Round', sans-serif;
+  }
+
+  .Info-Small {
+    color: #565656;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 0.78em;
+    margin-top: 0px;
+  }
+</style>
+
 </html>

@@ -8,7 +8,7 @@ function apifunction(responseBody) {
 
   //Save user's current level
   var CURRENT_USER_LEVEL;
-  chrome.storage.sync.get("current_user_level", function (storage_data) {
+  chrome.storage.local.get("current_user_level", function (storage_data) {
     //if user level is not in storage or if the level in storage doesnt match up with the current API data, update storage
     if (
       responseBody.length === 4 &&
@@ -17,7 +17,7 @@ function apifunction(responseBody) {
     ) {
       hasModified = true;
       CURRENT_USER_LEVEL = responseBody[2].data.level;
-      chrome.storage.sync.set({ current_user_level: CURRENT_USER_LEVEL });
+      chrome.storage.local.set({ current_user_level: CURRENT_USER_LEVEL });
     }
     //if user level is in storage, just grab that value
     else {
@@ -28,7 +28,7 @@ function apifunction(responseBody) {
       hasModified = false;
     }
   });
-  chrome.storage.sync.get("kanji", function (data) {
+  chrome.storage.local.get("kanji", function (data) {
     let kanji_set = new Set();
     //if the kanji data does not exist yet OR user level has changed, add it to storage
     if (!data.kanji || hasModified) {
@@ -44,7 +44,7 @@ function apifunction(responseBody) {
         i++;
       }
       //adding the set to storage
-      chrome.storage.sync.set({ kanji: [...kanji_set] }); //spread operator takes every variable and places it there
+      chrome.storage.local.set({ kanji: [...kanji_set] }); //spread operator takes every variable and places it there
     } else {
       kanji_set = new Set(data.kanji);
       //console.log("Kanji loaded from storage:");

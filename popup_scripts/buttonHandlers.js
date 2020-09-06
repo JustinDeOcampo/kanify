@@ -10,15 +10,15 @@ import {
 export function onAPIInputSubmit() {
 
   //Check chrome storage to see if user has input the api token in before
-  chrome.storage.sync.get("user_token", function (data) {
+  chrome.storage.local.get("user_token", function (data) {
     var apiToken;
     //if user has not put in the api token, add it to the storage
     if (!data["user_token"]) {
       //SAVE USERS DEFAULT SETTINGS TO CHROME STORAGE HERE
-      chrome.storage.sync.set({ page_refresh: false, first_login: true })
+      chrome.storage.local.set({ page_refresh: false, first_login: true })
       //Save api token
       apiToken = document.getElementById("API-Input").value;
-      chrome.storage.sync.set({ user_token: apiToken });
+      chrome.storage.local.set({ user_token: apiToken });
       //console.log("We just saved your token: " + apiToken);
     }
     //if user has already put in api token, just use what is in storage
@@ -30,7 +30,7 @@ export function onAPIInputSubmit() {
     }
 
     ///////////////////////////////////////////////////////////////////
-    chrome.storage.sync.get(["last_modified_user", "first_login"], function (data) {
+    chrome.storage.local.get(["last_modified_user", "first_login"], function (data) {
       var appendable_user;
       //if last modified date exists in storage, append it to the request header
       if (data.last_modified_user) {
@@ -66,7 +66,7 @@ export function onAPIInputSubmit() {
       ])
         .then(async ([subject_1, subject_2, user]) => {
           //adding last modified-dates to storage
-          chrome.storage.sync.set({
+          chrome.storage.local.set({
             last_modified_user: user.headers.get("last-modified"),
             last_modified_subject_1: subject_1.headers.get("last-modified"),
             last_modified_subject_2: subject_2.headers.get("last-modified"),
@@ -80,12 +80,12 @@ export function onAPIInputSubmit() {
               newDiv.style = 'margin-top: .3em; text-align: center; font-family: \'Varela Round\', sans-serif;';
               var currentDiv = document.getElementById("Version-Container");
               currentDiv.parentNode.insertBefore(newDiv, currentDiv);
-              chrome.storage.sync.remove("user_token");
+              chrome.storage.local.remove("user_token");
             }
             return [];
             //if 304, user data has not changed since last API access, so do not make any api calls
           } else if (user.status === 304) {
-            chrome.storage.sync.set({ first_login: false })
+            chrome.storage.local.set({ first_login: false })
             //console.log("Made 0 API calls!");
 
             return [];
@@ -148,10 +148,10 @@ export const onKanifyClick = () => {
 
 //Handles the toggling for the page refresh function
 export function onRefreshToggle(e) {
-  chrome.storage.sync.get("page_refresh", function (storage_data) {
+  chrome.storage.local.get("page_refresh", function (storage_data) {
     //Save the current state of the checkbox to storage
     let enableRefresh = document.getElementById("Page-Refresh").checked
-    chrome.storage.sync.set({ page_refresh: enableRefresh })
+    chrome.storage.local.set({ page_refresh: enableRefresh })
   })
 
 }

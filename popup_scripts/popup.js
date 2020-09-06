@@ -7,7 +7,7 @@ document.addEventListener(
   "DOMContentLoaded",
   function () {
     //Decide which opening screen to render based off of if the user has input their token already or not
-    chrome.storage.sync.get(["user_token", "page_refresh"], function (storage_data) {
+    chrome.storage.local.get(["user_token", "page_refresh"], function (storage_data) {
       if (storage_data.user_token) {
         settingsInputRenderer();
       }
