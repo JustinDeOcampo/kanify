@@ -23,8 +23,8 @@ export const settingsInputRenderer = () => {
   const div = document.getElementById("Input-Container");
   div.innerHTML = `
   <div class="Info-Box">
-    <label style = "margin-top:5px;" class="Info-Light">PC: Ctrl + Shift + E</label><br />
-    <label class="Info-Light">Mac: Cmd + Shift + E</label>
+    <label style = "margin-top:5px;" class="Info-Light">PC: Ctrl + Shift + X</label><br />
+    <label class="Info-Light">Mac: Cmd + Shift + X</label>
   </div>
   <button class = "Kanify" id="Kanify">Kanify Me!</button>
   <label class="switch">
